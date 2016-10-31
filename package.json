@@ -1,0 +1,12 @@
+{
+  "name": "versioner",
+  "version": "0.1.0",
+  "description": "Versioner takes care of bumping versions (semver) with a simple command and is highly customizable.",
+  "main": "build/index.js",
+  "repository": {
+    "url": "git@github.com:ngasst/versioner.git",
+    "type": "git"
+  },
+  "author": "Gaston Ndanyuzwe <gaston.ndanyuzwe@infiniteacacia.com>",
+  "license": "MIT"
+}
