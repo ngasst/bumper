@@ -1,5 +1,5 @@
 {
-  "name": "versioner",
+  "name": "bumper",
   "version": "0.1.0",
   "description": "Versioner takes care of bumping versions (semver) with a simple command and is highly customizable.",
   "main": "build/index.js",
@@ -8,5 +8,33 @@
     "type": "git"
   },
   "author": "Gaston Ndanyuzwe <gaston.ndanyuzwe@infiniteacacia.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "preferGlobal": true,
+  "bin": {
+    "version": "buld/index.js"
+  },
+  "dependencies": {
+    "chalk": "^1.1.3",
+    "pluralize": "^3.0.0",
+    "xml2js": "^0.4.17"
+  },
+  "devDependencies": {
+    "@types/chalk": "^0.4.31",
+    "@types/fs-extra": "^0.0.34",
+    "@types/node": "^6.0.46",
+    "@types/pluralize": "^0.0.27",
+    "@types/xml2js": "^0.0.28",
+    "gulp": "github:gulpjs/gulp#4.0",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-nodemon": "^2.2.1",
+    "gulp-util": "^3.0.7",
+    "nodemon": "^1.11.0",
+    "rimraf": "^2.5.4",
+    "source-map-support": "^0.4.6",
+    "ts-loader": "^0.9.5",
+    "typescript": "^2.0.6",
+    "webpack": "2.1.0-beta.24",
+    "webpack-dev-middleware": "^1.8.4",
+    "webpack-hot-middleware": "^2.13.1"
+  }
 }
