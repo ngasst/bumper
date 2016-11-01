@@ -1,10 +1,10 @@
 {
   "name": "bumper",
-  "version": "0.1.0",
+  "version": "0.1.7",
   "description": "Versioner takes care of bumping versions (semver) with a simple command and is highly customizable.",
   "main": "build/index.js",
   "repository": {
-    "url": "git@github.com:ngasst/versioner.git",
+    "url": "git@github.com:ngasst/bumper.git",
     "type": "git"
   },
   "author": "Gaston Ndanyuzwe <gaston.ndanyuzwe@infiniteacacia.com>",
@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "chalk": "^1.1.3",
+    "fs-extra": "^0.30.0",
     "pluralize": "^3.0.0",
     "xml2js": "^0.4.17"
   },
