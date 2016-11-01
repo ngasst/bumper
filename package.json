@@ -1,6 +1,6 @@
 {
   "name": "bumper",
-  "version": "0.1.7",
+  "version": "0.1.8",
   "description": "Versioner takes care of bumping versions (semver) with a simple command and is highly customizable.",
   "main": "build/index.js",
   "repository": {
