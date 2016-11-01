@@ -190,73 +190,48 @@ exports.patch = patch;
 "use strict";
 var bumpers_1 = __webpack_require__(1);
 var path_1 = __webpack_require__(3);
-var child_process_1 = __webpack_require__(8);
 var readline_1 = __webpack_require__(9);
+var actions_1 = __webpack_require__(10);
 var chalk = __webpack_require__(2);
 var args = process.argv.filter(function (a, i) { return i > 1; });
 if (args.length > 0) {
-    bumpers_1.bumpers
-        .filter(function (f) { return f.name === args[0]; })
-        .forEach(function (f) {
-        var p = path_1.resolve('package.json');
-        console.log(chalk.yellow("Bumping up " + f.name + " version based on version reported in file: \n\r" + p));
-        f(p)
-            .then(function () {
-            args.shift(); //remove the first element, which happens to be the type of bump, which we already covered.
-            var line = readline_1.createInterface(process.stdin, process.stdout);
-            args.forEach(function (ar) {
-                switch (ar.trim()) {
-                    case '--git':
-                        line.question("List all files you would you like to commit to git.\n\r\t*)Default is \"package.json\"\n\r\t*)pass in \"--all\" to stage and commit all modified files.", function (answer) {
-                            if (answer.trim() === '') {
-                                child_process_1.exec('git add package.json', function (err, stdout, stderr) {
-                                    if (err) {
-                                        console.error(chalk.red(err.message));
-                                        process.exit(1);
-                                    }
-                                    console.info(chalk.green(stdout));
-                                });
-                            }
-                            else {
-                                child_process_1.exec("git add " + answer.trim(), function (err, stdout, stderr) {
-                                    if (err) {
-                                        console.error(chalk.red(err.message));
-                                        process.exit(1);
-                                    }
-                                    console.info(chalk.green(stdout));
-                                });
-                            }
-                            line.question("Please enter the message to append to this git commit.\n\r\tdefault is: \"bump " + f.name + " version number\"", function (answer) {
-                                var message;
-                                answer.trim() === '' ? message = "bump " + f.name + " version number" : message = answer;
-                                child_process_1.exec("git commit -m\"" + message + "\"", function (err, stdout, stdin) {
-                                    if (err) {
-                                        console.error(chalk.red(err.message));
-                                        process.exit(1);
-                                    }
-                                    console.info(chalk.green(stdout));
-                                });
-                            });
-                        });
-                        //git add package.json
-                        //git commit -m"some message"
-                        break;
-                    case '--npm':
-                        console.log('deal with npm!');
-                        //login npm user
-                        //handle possible errors
-                        //publish file
-                        break;
-                    default:
-                        break;
-                }
+    Promise.resolve()
+        .then(function () {
+        return new Promise(function (resolve, reject) {
+            bumpers_1.bumpers
+                .filter(function (f) { return f.name === args[0]; })
+                .forEach(function (f) {
+                var p = path_1.resolve('package.json');
+                console.log(chalk.yellow("Bumping up " + f.name + " version based on version reported in file: \n\r" + p));
+                f(p)
+                    .then(function () {
+                    args.shift(); //remove the first element, which happens to be the type of bump, which we already covered.
+                    var line = readline_1.createInterface(process.stdin, process.stdout);
+                    Promise.resolve()
+                        .then(function () { return args.indexOf('--git') !== -1 ? actions_1.git(line, f.name) : false; })
+                        .then(function () { return args.indexOf('--npm') !== -1 ? actions_1.npm(line, f.name) : false; })
+                        .then(function () {
+                        console.log(chalk.bgGreen('Fished!'));
+                        resolve(true);
+                        process.exit();
+                    })
+                        .catch(function (err) {
+                        console.error(chalk.red(err));
+                        reject(err);
+                    });
+                })
+                    .catch(function (err) {
+                    console.log(chalk.red(err));
+                    reject(err);
+                });
             });
-        })
-            .catch(function (er) { return console.log(chalk.red(er)); });
-    });
+        });
+    })
+        .catch(function (err) { return console.error(chalk.red(err)); });
 }
 else {
     console.log(chalk.magenta("Please specify which level of versioning you which to bump.\n\rAcceptable values are: " + chalk.bold('"patch"') + ", " + chalk.bold('"minor"') + ", " + chalk.bold('"major"')));
+    process.exit(0);
 }
 
 
@@ -271,6 +246,103 @@ module.exports = require("child_process");
 /***/ function(module, exports) {
 
 module.exports = require("readline");
+
+/***/ },
+/* 10 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var git_1 = __webpack_require__(11);
+exports.git = git_1.git;
+var npm_1 = __webpack_require__(12);
+exports.npm = npm_1.npm;
+
+
+/***/ },
+/* 11 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var child_process_1 = __webpack_require__(8);
+var chalk = __webpack_require__(2);
+function git(line, type) {
+    return new Promise(function (resolve, reject) {
+        line.question("List all files you would you like to commit to git.\n\r\t*)Default is \"package.json\"\n\r\t*)pass in \"--all\" to stage and commit all modified files.", function (answer) {
+            if (answer.trim() === '') {
+                child_process_1.exec('git add package.json', function (err, stdout, stderr) {
+                    if (err) {
+                        console.error(chalk.red(err.message));
+                        process.exit(1);
+                    }
+                    console.info(chalk.green(stdout));
+                });
+            }
+            else {
+                child_process_1.exec("git add " + answer.trim(), function (err, stdout, stderr) {
+                    if (err) {
+                        console.error(chalk.red(err.message));
+                        process.exit(1);
+                    }
+                    console.info(chalk.green(stdout));
+                });
+            }
+            line.question("Please enter the message to append to this git commit.\n\r\tdefault is: \"bump " + type + " version number\"", function (answer) {
+                var message;
+                answer.trim() === '' ? message = "bump " + type + " version number" : message = answer;
+                child_process_1.exec("git commit -m\"" + message + "\"", function (err, stdout, stdin) {
+                    if (err) {
+                        console.error(chalk.red(err.message));
+                        process.exit(1);
+                    }
+                    console.info(chalk.green(stdout));
+                    resolve(true);
+                });
+            });
+        });
+    });
+}
+exports.git = git;
+
+
+/***/ },
+/* 12 */
+/***/ function(module, exports, __webpack_require__) {
+
+"use strict";
+"use strict";
+var child_process_1 = __webpack_require__(8);
+var chalk = __webpack_require__(2);
+function npm(line, type) {
+    return new Promise(function (resolve, reject) {
+        child_process_1.exec('npm whoami', function (err, stdout, stderr) {
+            if (err) {
+                console.error(chalk.red("It appears you are not logged in. Please run \"npm login first and try again...\"\r\n\t" + err.message));
+                process.exit(1);
+            }
+            var username = stdout;
+            line.question("Is this your npm username? (" + username + ")\r\n\tPlease write \"yes\" or \"no\" explicitly to continue.", function (answer) {
+                if (answer.trim() === 'no') {
+                    console.log(chalk.blue('Log into npm with the desired username/password before trying again.'));
+                    process.exit(0);
+                }
+                if (answer.trim() === 'yes') {
+                    child_process_1.exec('npm publish', function (err, stdout, stderr) {
+                        if (err) {
+                            console.log(chalk.red("An error occured. Please correct and try again!\r\n\t" + err.message));
+                            process.exit(1);
+                        }
+                        console.info(chalk.green(stdout));
+                        resolve(true);
+                    });
+                }
+            });
+        });
+    });
+}
+exports.npm = npm;
+
 
 /***/ }
 /******/ ]);

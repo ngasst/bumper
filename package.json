@@ -1,6 +1,6 @@
 {
   "name": "bumper",
-  "version": "0.1.13",
+  "version": "0.1.19",
   "description": "Versioner takes care of bumping versions (semver) with a simple command and is highly customizable.",
   "main": "build/index.js",
   "repository": {
@@ -11,7 +11,7 @@
   "license": "MIT",
   "preferGlobal": true,
   "bin": {
-    "version": "buld/index.js"
+    "bump": "build/index.js"
   },
   "dependencies": {
     "chalk": "^1.1.3",
