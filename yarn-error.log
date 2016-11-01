@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Users\ndany\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add @types/node --dev
+  C:\Program Files\nodejs\node.exe C:\Users\ndany\AppData\Roaming\npm\node_modules\yarn\bin\yarn.js add node-bumper --dev
 
 PATH: 
   C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\ndany\bin;C:\Users\ndany\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\local\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\usr\bin;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Users\ndany\bin;C:\Program Files\ConEmu\ConEmu\Scripts;C:\Program Files\ConEmu;C:\Program Files\ConEmu\ConEmu;C:\Program Files\Docker\Docker\Resources\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\Program Files (x86)\PuTTY;C:\Program Files\nodejs;C:\Program Files (x86)\Microsoft VS Code\bin;C:\Users\ndany\AppData\Roaming\npm;%USERPROFILE%\AppData\Local\Microsoft\WindowsApps;C:\Program Files\Git\usr\bin\vendor_perl;C:\Program Files\Git\usr\bin\core_perl
@@ -15,8 +15,8 @@ Platform:
 
 npm manifest: 
   {
-    "name": "bumper",
-    "version": "0.1.0",
+    "name": "node-bumper",
+    "version": "0.1.24",
     "description": "Versioner takes care of bumping versions (semver) with a simple command and is highly customizable.",
     "main": "build/index.js",
     "repository": {
@@ -25,15 +25,22 @@ npm manifest:
     },
     "author": "Gaston Ndanyuzwe <gaston.ndanyuzwe@infiniteacacia.com>",
     "license": "MIT",
+    "scripts": {
+      "bump:patch": "node ./node_modules/node-bumper/build/index patch --git",
+      "bump:patch:pub": "node ./node_modules/node-bumper/build/index patch --git --npm",
+      "bump:minor": "node ./node_modules/node-bumper/build/index minor --git",
+      "bump:minor:pub": "node ./node_modules/node-bumper/build/index minor --git --npm",
+      "bump:major": "node ./node_modules/node-bumper/build/index major --git",
+      "bump:major:pub": "node ./node_modules/node-bumper/build/index major --git --npm"
+    },
     "preferGlobal": true,
     "bin": {
-      "version": "buld/index.js"
+      "bump": "build/index.js"
     },
     "dependencies": {
       "chalk": "^1.1.3",
       "fs-extra": "^0.30.0",
-      "pluralize": "^3.0.0",
-      "xml2js": "^0.4.17"
+      "pluralize": "^3.0.0"
     },
     "devDependencies": {
       "@types/chalk": "^0.4.31",
@@ -1941,7 +1948,7 @@ Lockfile:
       lodash._reinterpolate "^3.0.0"
       lodash.escape "^3.0.0"
   
-  lodash@^4.0.0, lodash@^4.3.0:
+  lodash@^4.3.0:
     version "4.16.5"
     resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.16.5.tgz#77d88feac548009b1a5c4ca7b49ac431ce346ae8"
   
@@ -2685,10 +2692,6 @@ Lockfile:
     version "1.0.1"
     resolved "https://registry.yarnpkg.com/ripemd160/-/ripemd160-1.0.1.tgz#93a4bbd4942bc574b69a8fa57c71de10ecca7d6e"
   
-  sax@>=0.6.0:
-    version "1.2.1"
-    resolved "https://registry.yarnpkg.com/sax/-/sax-1.2.1.tgz#7b8e656190b228e81a66aea748480d828cd2d37a"
-  
   semver-diff@^2.0.0:
     version "2.1.0"
     resolved "https://registry.yarnpkg.com/semver-diff/-/semver-diff-2.1.0.tgz#4bbb8437c8d37e4b0cf1a68fd726ec6d645d6d36"
@@ -3319,19 +3322,6 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/xdg-basedir/-/xdg-basedir-2.0.0.tgz#edbc903cc385fc04523d966a335504b5504d1bd2"
     dependencies:
       os-homedir "^1.0.0"
-  
-  xml2js:
-    version "0.4.17"
-    resolved "https://registry.yarnpkg.com/xml2js/-/xml2js-0.4.17.tgz#17be93eaae3f3b779359c795b419705a8817e868"
-    dependencies:
-      sax ">=0.6.0"
-      xmlbuilder "^4.1.0"
-  
-  xmlbuilder@^4.1.0:
-    version "4.2.1"
-    resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-4.2.1.tgz#aa58a3041a066f90eaa16c2f5389ff19f3f461a5"
-    dependencies:
-      lodash "^4.0.0"
   
   xtend@^4.0.0, "xtend@>=4.0.0 <4.1.0-0", xtend@~4.0.0:
     version "4.0.1"

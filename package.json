@@ -1,6 +1,6 @@
 {
   "name": "node-bumper",
-  "version": "0.1.24",
+  "version": "0.1.25",
   "description": "Versioner takes care of bumping versions (semver) with a simple command and is highly customizable.",
   "main": "build/index.js",
   "repository": {
@@ -9,6 +9,14 @@
   },
   "author": "Gaston Ndanyuzwe <gaston.ndanyuzwe@infiniteacacia.com>",
   "license": "MIT",
+  "scripts": {
+    "bump:patch": "node ./node_modules/node-bumper/build/index patch --git",
+    "bump:patch:pub": "node ./node_modules/node-bumper/build/index patch --git --npm",
+    "bump:minor": "node ./node_modules/node-bumper/build/index minor --git",
+    "bump:minor:pub": "node ./node_modules/node-bumper/build/index minor --git --npm",
+    "bump:major": "node ./node_modules/node-bumper/build/index major --git",
+    "bump:major:pub": "node ./node_modules/node-bumper/build/index major --git --npm"
+  },
   "preferGlobal": true,
   "bin": {
     "bump": "build/index.js"
@@ -16,8 +24,7 @@
   "dependencies": {
     "chalk": "^1.1.3",
     "fs-extra": "^0.30.0",
-    "pluralize": "^3.0.0",
-    "xml2js": "^0.4.17"
+    "pluralize": "^3.0.0"
   },
   "devDependencies": {
     "@types/chalk": "^0.4.31",
@@ -29,6 +36,7 @@
     "gulp-load-plugins": "^1.4.0",
     "gulp-nodemon": "^2.2.1",
     "gulp-util": "^3.0.7",
+    "node-bumper": "^0.1.24",
     "nodemon": "^1.11.0",
     "rimraf": "^2.5.4",
     "source-map-support": "^0.4.6",

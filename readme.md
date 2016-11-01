@@ -11,7 +11,7 @@ Bumper is installed with npm or yarn.
     npm install -g bumper // yarn add bumper -g
 
 ### Local Install
-    npm install --save bumper // yarn add bumper
+    npm install --save-dev bumper // yarn add bumper --dev
 
 ## Usage
 
