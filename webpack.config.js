@@ -23,7 +23,7 @@ function createConfig(isDebug) {
 	}
 	
 	if (!isDebug) {
-		plugins.push(new webpack.optimize.UglifyJsPlugin());
+		plugins.push(new webpack.optimize.UglifyJsPlugin({mangle: false}));
 		plugins.push(new webpack.BannerPlugin({banner: '#!/usr/bin/env node', raw: true, entryOnly: true}));
 	}
 	
